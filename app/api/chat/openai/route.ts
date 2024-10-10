@@ -24,9 +24,19 @@ export async function POST(request: Request) {
       organization: profile.openai_organization_id
     })
 
+    const systemMessage = {
+      role: "system",
+      content: "You are a helpful assistant. Provide clear and concise answers. you work for RateChecker"
+    }
+
+    // Check if the first message is already a system message
+    const updatedMessages = messages[0]?.role === "system" 
+      ? messages 
+      : [systemMessage, ...messages]
+
     const response = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
-      messages: messages as ChatCompletionCreateParamsBase["messages"],
+      messages: updatedMessages as ChatCompletionCreateParamsBase["messages"],
       temperature: chatSettings.temperature,
       max_tokens:
         chatSettings.model === "gpt-4-vision-preview" ||
