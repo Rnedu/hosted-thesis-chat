@@ -30,9 +30,7 @@ export async function POST(request: Request) {
     }
 
     // Check if the first message is already a system message
-    const updatedMessages = messages[0]?.role === "system" 
-      ? messages 
-      : [systemMessage, ...messages]
+    const updatedMessages = [systemMessage, ...messages.filter(msg => msg.role !== "system")]
 
     const response = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
