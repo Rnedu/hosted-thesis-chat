@@ -12,6 +12,7 @@ export const runtime: ServerRuntime = "edge";
 const pinecone = new PineconeClient();
 await pinecone.init({
   apiKey: process.env.PINECONE_API_KEY || "", // Add your Pinecone API key here
+  environment: process.env.PINECONE_ENVIRONMENT || "", // Add your Pinecone environment
 });
 const index = pinecone.Index("thesis"); // Replace with your Pinecone index name
 
