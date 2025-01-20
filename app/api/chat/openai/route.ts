@@ -28,12 +28,12 @@ async function retrieveContext(query: string): Promise<string> {
 
   const vector = embeddingResponse.data[0].embedding;
   
-  const searchResponse = await index.query({
-    topK: 5, // Number of relevant documents to retrieve
-    includeMetadata: true,
-  });
+  const queryResponse = await index.query({
+    topK: 3,
+    includeValues: true
+});
 
-  const context = searchResponse.matches
+  const context = queryResponse.matches
     .map((match) => match.metadata?.content || "")
     .join("\n");
 
