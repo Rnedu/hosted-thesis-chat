@@ -29,7 +29,6 @@ async function retrieveContext(query: string): Promise<string> {
   const vector = embeddingResponse.data[0].embedding;
   
   const searchResponse = await index.query({
-    vector,
     topK: 5, // Number of relevant documents to retrieve
     includeMetadata: true,
   });
